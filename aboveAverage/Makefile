@@ -2,7 +2,7 @@ COMPILER = g++
 
 COMPILER_FLAGS = -c -g -Wall -std=c++17
 
-PROGRAM_NAME = cardboard.exe
+PROGRAM_NAME = aboveAverage.exe
 
 CPP_FILES = main.cpp
 
