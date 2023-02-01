@@ -9,9 +9,9 @@ int main() {
     int C;
     cin >> C;
     for (int j = 0; j < C; j++) {
-        int N;
-        int sum = 0;
-        float average = 0;
+        float N;
+        float sum = 0.000;
+        float average = 0.000;
         cin >> N;
         vector <float> dataLine;
         for (int i = 0; i < N; i++) {
@@ -25,13 +25,13 @@ int main() {
         }
 
         average = sum/N;
-        int aboveAverageCounter = 0;
+        float aboveAverageCounter = 0.000;
         
         for (int p = 0; p < N; p++) {
             if (dataLine[p] > average)
             aboveAverageCounter++;
         }
-        float aboveAverage = 0;
+        float aboveAverage = 0.000;
         aboveAverage = (aboveAverageCounter/N) * 100;
         stats.push_back(aboveAverage);
 
@@ -44,16 +44,9 @@ int main() {
     }
 
     for (int t = 0; t < C; t++) {
-        cout << setprecision(3);
+        cout << fixed << setprecision(3);
         cout << stats[t] << "%" << endl;
     }
-
-    /*
-
-    */
     
-
-
-
     return 0;
 }
