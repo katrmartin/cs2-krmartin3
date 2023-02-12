@@ -13,18 +13,14 @@ int main() {
         data.push_back(x);
     }
 
-    for (int j = 0; j <= T; j++) {
+    for (int j = 0; j < n; j++) {
         sum += data[j];
         if (sum <= T) {
             completed++;
-    
+        
         }
-        if (sum <= data[j-1])
-            break;
-
-        
-        
-
+        else break;
+    
     }
 
     cout << completed << endl;
