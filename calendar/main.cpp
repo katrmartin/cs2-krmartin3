@@ -43,6 +43,16 @@ public:
     void outFile () {
         //put formatted data into new file
     }
+    void readFeedbackFile() {
+        ifstream fin;
+        //if phone dist is some number then
+        fin.open("PhoneJudge.txt")
+        //randomly pick one of the lines to use
+        //if sleep dist is some number then
+        //fin.open("SleepJudge.txt")
+        //etc
+
+    }
 };
 
 class eachDay {
@@ -120,7 +130,6 @@ private:
 public:
 //functions
     void compileDays (vector <eachDay> days) {
-        string fileName = data.getFile();
         //put all days into week vector
     }
     void read (istream & fin) {
@@ -160,9 +169,6 @@ int main () {
     return 0;
 }
 
-//another file will have comments that are randomly picked to add as "feedback"
+//other files will have comments that are randomly picked to add as "feedback"
 //to the calendar based on time distribution results
 
-
-
-//declaring a class type vs making it a super class

@@ -1,5 +1,1 @@
-Here is where I will put my judgemental, snarky comments!
-
-ex.
-
 "You really spent " << phoneDist << " of your time this week on your phone? Wow."
