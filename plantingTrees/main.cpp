@@ -19,7 +19,7 @@ x x
 using namespace std;
 
 int main() {
-    int N, i, p, temp;
+    int N, i, newSeeds;
     vector <int> seeds;
 
     cin >> N;
@@ -29,14 +29,40 @@ int main() {
         seeds.push_back(i);
     }
 
-    sort(seeds.begin(), seeds.end(), greater<int>()); 
-    bool done = false;
+    sort(seeds.begin(), seeds.end()); 
+
+            for (int p = 1; p < seeds.size(); p++) {
+                    newSeeds = seeds[p] + p;  
+
+                    
+            } 
+
+
+/*
+    for (auto c: seeds) {
+        cout << c << " ";
+    }
+    cout << endl;
+*/
+
+
+    //make sure no numbers are the same, increment by 1 if they are until all numbers are different #FIXED
+    //add 2 to the biggest number #FIXED
+
+    cout << newSeeds << endl;
+
+
+    return 0;
+}
+
+/*
+  bool done = false;
     while (!done) {
         done = true;
         temp = seeds[0];
             for (p = 1; p < seeds.size(); p++) {
                 if (seeds[p] == temp) {
-                    seeds[p-1]++;   
+                    seeds[p] + p;   
                     done = false;
                     break;
                 }
@@ -45,19 +71,4 @@ int main() {
             } 
 
     }
-
-    /*
-    for (auto c: seeds) {
-        cout << c << " ";
-    }
-    cout << endl;
-    */
-
-    //make sure no numbers are the same, increment by 1 if they are until all numbers are different #FIXED
-    //add 2 to the biggest number #FIXED
-
-    cout << seeds[0] + 2 << endl;
-
-
-    return 0;
-}
+*/

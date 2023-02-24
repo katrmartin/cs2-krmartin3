@@ -1,0 +1,5 @@
+12 3 mood=happy phone=4 sleep=8 social=2 work=4 school=6 
+
+12 4 
+
+12 5

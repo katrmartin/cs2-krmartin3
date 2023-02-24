@@ -1,6 +1,9 @@
-//stack notes from 2/13
+
+//stack notes from 2/13, 2/16
 
 #include <iostream>
+#include "stack.hpp"
+#include "stack1.cpp"
 
 using namespace std;
 
@@ -14,49 +17,9 @@ using namespace std;
  * 99  <- Position starting point
  * */
 
-class StackException {
-    public:
-    void print() {
-        cerr << "Stack Exception Occurred" << endl;
-    }
-};
-
-const int MAXSTACK=100;
-template <typename t> class Stack {
-    t values[MAXSTACK];
-    int position;
-    public:
-    Stack() { position = MAXSTACK - 1; }
-    void push(t newValue) {
-        if (!isFull()) {
-            values[position] = newValue;
-            position--;
-        }
-        else throw StackException(); //what does throw mean?
-        
-    }
-    t pop() {
-        if (!isEmpty()) {
-            position++;
-            return values[position];
-        }
-        //return t(); we shouldn't do this
-        throw StackException();
-    }
-    t top() {
-        if (!isEmpty()) return values[position+1];
-        //return t(); we shouldn't do this
-        throw StackException();
-    }
-    bool isEmpty() { return (position == MAXSTACK - 1); }
-    // same as if (position == MAXSTACK - 1) return true; else return false;
-    bool isFull() { return (position == -1); }
-
-};
-
 
 int main() {
-    Stack<int> s;
+    Stack s;
    // s.push(16);
    // s.push(20);
     // cout << s.pop() << endl;

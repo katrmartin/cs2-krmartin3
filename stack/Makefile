@@ -4,7 +4,7 @@ COMPILER_FLAGS = -c -g -Wall -std=c++17
 
 PROGRAM_NAME = stack.exe
 
-CPP_FILES = stack.cpp
+CPP_FILES = stack.cpp Stack.hpp stack1.cpp
 
 build:
 	@$(COMPILER) $(COMPILER_FLAGS) $(CPP_FILES)
