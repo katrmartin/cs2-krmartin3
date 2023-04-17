@@ -31,7 +31,7 @@ int main() {
 
     sort(seeds.begin(), seeds.end()); 
 
-            for (int p = 1; p < seeds.size(); p++) {
+            for (int p = 0; p < seeds.size(); p++) {
                     newSeeds = seeds[p] + p;  
 
                     

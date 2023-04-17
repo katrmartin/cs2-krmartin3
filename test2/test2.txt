@@ -1,0 +1,83 @@
+when: 3/30/23 at 12:00 PM
+
+50% multiple choice: 
+    about 15 questions
+50% coding:
+    reading of code:
+        important to industry
+    writing of code:
+        Karl is going to be relaxed about syntax errors
+        code similar to code from class with pieces marked as
+            // ToDo
+        Whole code writing example:
+            program statement and you should be able to write the code
+
+Topics:
+    class, private, public
+    +protected- available to derived class, but not available to everyone (diminished)
+    +friend
+    +operator
+    +virtual (diminished) multiple choice questions (the children should be able to redefine this)
+        virtual function (provides default)
+        pure virtual function (no def because no default and set = 0)
+        pure virtual class (every function is pure virtual)
+        abstract class (at least one pure virtual function, can't declare until its concrete)
+        concrete class (everything has an implementation, can declare)
+    +this
+    Naming of class constructor/destructor
+    --static
+    derived classes will be on the test
+
+Data Structures:
+    *stack*:
+        LIFO Last In First Out
+        push, pop, top
+        can implement as array with a position pointer 
+        can implement as a singly linked list:
+            effectively only limited by memory of computer
+        postfix (RPN) calculator example
+        plate stacker in the cafeteria
+    *queues*:
+        FIFO First In First Out
+        push (at the back), front (value at the front), pop (remove element at the front)
+        implementation with array with two positions:
+            if the two positions are equal the queue is empty
+            mod arithmetic
+        implementation with doubly linked list:
+            effectively only limited by memory of computer
+    *singly linked list*:
+        a single pointer to "next" plus data to be stored
+        NULL is traditionally the end of the list
+    *doubly linked list*:
+        two pointers to "next" and "prev" plus the data item
+        NULL is traditionally the end of the "next" and "prev" list
+        --grounding a list: head is just a pointer (or two) to the list pieces
+            singly linked: pointer to the head
+            doubly linked: head and tail
+    *binary tree*: O(LogN)
+        two pointers to "left" and "right" ("less" and "more")
+        comparison operator "<"
+        fast at finding elements when there are a large number of them
+            1,000,000 -> 20 tests to find the value
+            1,000     -> 10 tests
+            100       -> 7 tests
+            10        -> 4 tests
+            log(x)/log(2)
+            2^x
+        Associative array (not on test)
+            -- map<string,int> values;
+            -- values["Karl"]=80000;
+    *memory leaks*:
+        for every "new" there should be a "delete"
+    *debugging*:
+        seg fault -> check you compiled with -g -> gdb (lldb) to find location
+            bt (backtrace) to see the call stack
+
+
+Advice for studying:
+    write and read code examples from class
+
+
+
+
+

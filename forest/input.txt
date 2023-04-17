@@ -5,3 +5,8 @@
 2 2
 3 2
 2 4
+
+
+1 heard 2 3
+2 heard 2 4
+3 heard 2 3 

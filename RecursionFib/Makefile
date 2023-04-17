@@ -2,7 +2,7 @@ COMPILER = g++
 
 COMPILER_FLAGS = -c -g -Wall -std=c++17
 
-PROGRAM_NAME = calendar.exe
+PROGRAM_NAME = coldputerScience.exe
 
 CPP_FILES = main.cpp
 
@@ -29,4 +29,3 @@ kattistest:
 
 
 	@echo "All test cases passed!"
-

@@ -2,7 +2,7 @@ COMPILER = g++
 
 COMPILER_FLAGS = -c -g -Wall -std=c++17
 
-PROGRAM_NAME = calendar.exe
+PROGRAM_NAME = simonsays.exe
 
 CPP_FILES = main.cpp
 

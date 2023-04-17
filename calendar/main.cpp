@@ -17,46 +17,9 @@ an input file, formats it, calculates some statistics, and spits out a formatted
 some snarky comments.
 */
 
-class Calendar {
-    //maybe eachDay should be a superclass?
-private:
-    int day;
-    int month;
-    eachDay day;
-
-public:
-    //get, set, formatting functions
-    Calendar (int newMonth, int newDay) {
-        day = newDay;
-        month = newMonth;
-    }
-    void fileReadDate (eachDay day) {
-        string fileName = day.getFile();
-        ifstream fin;
-        fin.open(fileName);
-        fin >> month >> day;
-        fin.close();
-    }
-    void calendarFormatter () {
-        //TBD
-    }
-    void outFile () {
-        //put formatted data into new file
-    }
-    void readFeedbackFile() {
-        ifstream fin;
-        //if phone dist is some number then
-        fin.open("PhoneJudge.txt")
-        //randomly pick one of the lines to use
-        //if sleep dist is some number then
-        //fin.open("SleepJudge.txt")
-        //etc
-
-    }
-};
-
 class eachDay {
 private:
+    int month, day;
     double sleep;
     double phone;
     double school;
@@ -66,6 +29,7 @@ private:
     string fileName;
     public:
 //get, set functions
+/*
     eachDay (double newSleep, double newPhone, double newSchool, 
         double newSocial, double newFileName, double newWork,
          string newMood) {
@@ -77,22 +41,29 @@ private:
             work = newWork;
             mood = newMood;
         }
+        */
     void setFile (string newFileName) {
         fileName = newFileName;
     }
     string getFile () {
         return fileName;
     }
-    void readFile (istream & fin) {
-            //ifstream fin;
-            //fin.open(fileName);
-            //setFile(fileName);
+    void readFile () {
+            ifstream fin;
+            fin.open(fileName);
             getline(fin, mood);
             //configure to ignore first 2 numbers
+            fin >> month >> day;
             fin >> sleep >> phone >> school >> social
             >> work;
             //need to make sure it only reads in what I need
             //fin.close(); //might be better as its own function
+    }
+    string getDate () {
+        return month + " " + day;
+    }
+    string getMood() {
+        return mood;
     }
     double getSleep () {
         return sleep;
@@ -109,6 +80,21 @@ private:
     double getWork () {
         return work;
     }
+    double sleepDist() {
+        return 168/sleep;
+    }
+    double phoneDist() {
+        return 168/phone;
+    }
+    double schoolDist() {
+        return 168/school;
+    }
+    double socialDist() {
+        return 168/social;
+    }
+    double workDist() {
+        return 168/work;
+    }
 
 
 /*
@@ -120,6 +106,7 @@ getFromUser() to gather user input from file or iostream
 */
 
 };
+
 enum DAYOFWEEK {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY};
 
 class Week {
@@ -132,37 +119,146 @@ public:
     void compileDays (vector <eachDay> days) {
         //put all days into week vector
     }
-    void read (istream & fin) {
+    void readWeek () {
         for (int i = 0; i < 7; i++) {
             eachDay data;
-            data.readFile(fin);
-            days.push_back[data];
+            data.readFile();
+            days.push_back(data);      
         }
-
-    }
-    void readFile(string fileName) {
-            ifstream fin;
-            fin.open(fileName);
-            read(fin);
-            fin.close();
         
+
+    }
+    void getSun () {
+        cout << days[0].getDate() << endl;
+        cout << days[0].getMood() << endl;
+        cout << days[0].getSleep() << endl;
+        cout << days[0].getSocial() << endl;
+        cout << days[0].getPhone() << endl;
+        cout << days[0].getWork() << endl;
+        cout << days[0].getSchool() << endl;
+    }
+    void getMon () {
+        cout << days[1].getDate() << endl;
+        cout << days[1].getMood() << endl;
+        cout << days[1].getSleep() << endl;
+        cout << days[1].getSocial() << endl;
+        cout << days[1].getPhone() << endl;
+        cout << days[1].getWork() << endl;
+        cout << days[1].getSchool() << endl;
+    }
+    void getTues () {
+        cout << days[2].getDate() << endl;
+        cout << days[2].getMood() << endl;
+        cout << days[2].getSleep() << endl;
+        cout << days[2].getSocial() << endl;
+        cout << days[2].getPhone() << endl;
+        cout << days[2].getWork() << endl;
+        cout << days[2].getSchool() << endl;
+    }
+    void getWed () {
+        cout << days[3].getDate() << endl;
+        cout << days[3].getMood() << endl;
+        cout << days[3].getSleep() << endl;
+        cout << days[3].getSocial() << endl;
+        cout << days[3].getPhone() << endl;
+        cout << days[3].getWork() << endl;
+        cout << days[3].getSchool() << endl;
+    }
+    void getThurs () {
+        cout << days[4].getDate() << endl;
+        cout << days[4].getMood() << endl;
+        cout << days[4].getSleep() << endl;
+        cout << days[4].getSocial() << endl;
+        cout << days[4].getPhone() << endl;
+        cout << days[4].getWork() << endl;
+        cout << days[4].getSchool() << endl;
+    }
+    void getFri () {
+        cout << days[5].getDate() << endl;
+        cout << days[5].getMood() << endl;
+        cout << days[5].getSleep() << endl;
+        cout << days[5].getSocial() << endl;
+        cout << days[5].getPhone() << endl;
+        cout << days[5].getWork() << endl;
+        cout << days[5].getSchool() << endl;
+    }
+    void getSat () {
+        cout << days[6].getDate() << endl;
+        cout << days[6].getMood() << endl;
+        cout << days[6].getSleep() << endl;
+        cout << days[6].getSocial() << endl;
+        cout << days[6].getPhone() << endl;
+        cout << days[6].getWork() << endl;
+        cout << days[6].getSchool() << endl;
     }
 
-    double sleepDist (eachDay &data) {
-        double sleeping = data.getSleep();
-        //return percent time was spent
-        //on sleeping this week
+    
+    double sleepDistWeek(eachDay &data) {
+        double total = 0;
+        for (int i = 0; i < 7; i++) {
+            total += days[i].getSleep();
+        }
+        return 168/total;
     }
-    double phoneDist (eachDay &data) {
+    double phoneDistWeek(eachDay &data) {
+        double total = 0;
+        for (int i = 0; i < 7; i++) {
+            total += days[i].getPhone();
+        }
+        return 168/total;
     }
-    double schoolDist (eachDay &data) {
+    double schoolDistWeek(eachDay &data) {
+        double total = 0;
+        for (int i = 0; i < 7; i++) {
+            total += days[i].getSchool();
+        }
+        return 168/total;
     }
-    double socialDist (eachDay &data) {
+    double socialDistWeek(eachDay &data) {
+        double total = 0;
+        for (int i = 0; i < 7; i++) {
+            total += days[i].getSocial();
+        }
+        return 168/total;
     }
-    double workDist (eachDay &data) {
+    double workDistWeek(eachDay &data) {
+        double total = 0;
+        for (int i = 0; i < 7; i++) {
+            total += days[i].getWork();
+        }
+        return 168/total;
     }
+
+
 
 };
+
+class Calendar {
+public:
+
+    void calendarFormatter () {
+        //TBD
+    }
+    void outFile (eachDay eachday, Week week) {
+        ofstream fout;
+        fout.open("Calendar.txt");
+        fout << "MONDAY: " << endl;
+        week.getMonday();
+        //test
+        
+    }
+    void readFeedbackFile() {
+        ifstream fin;
+        //if phone dist is some number then
+        fin.open("PhoneJudge.txt");
+        //randomly pick one of the lines to use
+        //if sleep dist is some number then
+        //fin.open("SleepJudge.txt")
+        //etc
+
+    }
+};
+
 
 int main () {
 

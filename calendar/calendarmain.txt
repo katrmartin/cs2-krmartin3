@@ -1,0 +1,24 @@
+    
+    Calendar calendar;
+    eachDay days;
+    Week week;
+
+    cout << "Welcome to the Calendar! Would you like to create one? (Y/N)" << endl;
+    char ans;
+    cin >> ans;
+        if (ans=='N') {
+            cout << "Now exiting ... " << endl;
+        }
+        else{
+            cout << "Great! Please enter a file name: ";
+            string fileName;
+            cin >> fileName;
+            days.setFile(fileName);
+            //days.readFile();
+            week.readWeek();
+
+            cout << "Cool file name ... here's your calendar!" << endl;
+
+            calendar.outFile(days, week);
+
+        }

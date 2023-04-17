@@ -1,7 +1,7 @@
 /*
-3 = 4 3 2
 1 = 2 3
 2 = 2 4
+3 = 3 2
 */
 
 #include <iostream>
@@ -9,34 +9,48 @@
 #include <map>
 #include <string>
 #include <sstream>
+#include <iterator>
+#include <algorithm>
 
 using namespace std;
 
 map <int, vector<int> > myMap;
 
-void ComparisonFinder3000 (map <int, vector<int> >);
+void ComparisonFinder3000 (map <int, vector<int> > &M, int P) {
+    vector <int> folks;
+    int opinions = 0;
+    for (int l = 0; l < P; l++) {
+        folks.push_back(l+1);
+    }
 
-void ComparisonFinder3000 (map <int, vector<int> > &M, int opinionCounter) {
-        opinionCounter = myMap.size();
-        cout << opinionCounter << endl; //correct
-        for (int k = 0; k < 10000; k++) {
-            if (myMap[k] == myMap[k+1]) opinionCounter--;
+    for (int i = 0; i < folks.size(); i++) {
+        for (int j = i + 1; j < folks.size(); j++) {
+            //cout << i << " " << j << endl;
+            if (M[folks[i]] == M[folks[j]])
+            {
+                
+                folks.erase(folks.begin()+(j));
+                j--;
+            }
+        }
+        opinions++;
 
-    //opinion = 0
-    //2 2 example
-    //person 1 opinion++
-    //person 2 opinion++
-    //if person 1 has same pairs as person 2 opinion--
-    //give each person an opinion, then compare all people together to
-    //subtract opinions
+    }
+
+    cout << opinions << endl;
 }
-    cout << opinionCounter << endl;
 
-}
+void SortingMachine3000 (map <int, vector<int> > &M) {
+        for (auto& i: M) {
+        sort(i.second.begin(), i.second.end());
+            }
+        }
+      
+
 
 
 int main () {
-    int opinionCounter = 0;
+    //int opinionCounter = 0;
     int T, P, person, tree;
     string line;
 
@@ -44,24 +58,21 @@ int main () {
 
     while (cin >> person >> tree) {
         myMap[person].push_back(tree);
-        //make it stop after user presses enter and has no more input
     }
-
 //debugging
-/*
-    for (auto pair: myMap) {
-        int key = pair.first;
-        cout << key << " KEY" << endl;
-        for (int t : myMap[key]) {
-            cout << t << " ";
-            cout << endl;
-            }
-        }
 
-    cout << endl;
-    */
+    SortingMachine3000(myMap);
 
-    ComparisonFinder3000(myMap, opinionCounter);
+        // for (auto pair: myMap) {
+        // int key = pair.first;
+        // cout << key << " KEY" << endl;
+        // for (int t : myMap[key]) {
+        //     cout << t << " ";
+        //     cout << endl;
+        //     }
+        // }
+
+    ComparisonFinder3000(myMap, P);
     
     return 0;
     }

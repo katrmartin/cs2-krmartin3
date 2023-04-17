@@ -2,9 +2,9 @@ COMPILER = g++
 
 COMPILER_FLAGS = -c -g -Wall -std=c++17
 
-PROGRAM_NAME = calendar.exe
+PROGRAM_NAME = LinkedList.exe
 
-CPP_FILES = main.cpp
+CPP_FILES = LinkedList.cpp
 
 build:
 	@$(COMPILER) $(COMPILER_FLAGS) $(CPP_FILES)
@@ -29,4 +29,3 @@ kattistest:
 
 
 	@echo "All test cases passed!"
-
