@@ -8,10 +8,10 @@ int main() {
     int lines;
     vector<string>sentences;
     string sentence;
-    string keyword= "simon says";
+    string keyword= "simon says ";
 
     cin >> lines;
-    cin.ignore(1000, '\n');
+    cin.ignore();
 
     for (int i = 0; i < lines; i++) {
         getline(cin, sentence);
@@ -20,8 +20,8 @@ int main() {
 
     for (int j = 0; j < sentences.size(); j++) {
         string phrase = sentences[j];
-        if (phrase.find(keyword) != string::npos)
-            cout << phrase.substr(10) << endl;
+        if (phrase.find(keyword) == 0)
+            cout << phrase.substr(11) << endl;
         else {
             cout << endl;
         }
