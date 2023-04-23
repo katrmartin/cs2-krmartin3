@@ -31,44 +31,37 @@ int main() {
 
     sort(seeds.begin(), seeds.end()); 
 
+    for (auto c: seeds) {
+        cout << c << " ";
+    }
+    cout << endl;
+
             for (int p = 0; p < seeds.size(); p++) {
                     newSeeds = seeds[p] + p;  
 
                     
             } 
 
+6
+9 20 35 38 39 39
 
-/*
-    for (auto c: seeds) {
-        cout << c << " ";
-    }
-    cout << endl;
-*/
+9 + 0 = 9
+
+2 3 4 3
+XX
+X XXX
+XX XXX
+X XXX XXXX
+XX XXX 
+X XX 
+X 
 
 
-    //make sure no numbers are the same, increment by 1 if they are until all numbers are different #FIXED
-    //add 2 to the biggest number #FIXED
+
+
 
     cout << newSeeds << endl;
 
 
     return 0;
 }
-
-/*
-  bool done = false;
-    while (!done) {
-        done = true;
-        temp = seeds[0];
-            for (p = 1; p < seeds.size(); p++) {
-                if (seeds[p] == temp) {
-                    seeds[p] + p;   
-                    done = false;
-                    break;
-                }
-                else temp = seeds[p];
-                    
-            } 
-
-    }
-*/

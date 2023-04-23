@@ -4,7 +4,7 @@ COMPILER_FLAGS = -c -g -Wall -std=c++17
 
 PROGRAM_NAME = spreadsheet.exe
 
-CPP_FILES = main.cpp
+CPP_FILES = SpreadSheet.cpp
 
 build:
 	@$(COMPILER) $(COMPILER_FLAGS) $(CPP_FILES)
