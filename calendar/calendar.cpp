@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -29,10 +30,10 @@ private:
     string fileName;
     public:
 //get, set functions
-/*
-    eachDay (double newSleep, double newPhone, double newSchool, 
-        double newSocial, double newFileName, double newWork,
-         string newMood) {
+
+    eachDay (double newSleep=0.0, double newPhone=0.0, double newSchool=0.0, 
+        double newSocial=0.0, double newFileName=0.0, double newWork=0.0,
+         string newMood="") {
             sleep = newSleep;
             phone = newPhone;
             school = newSchool;
@@ -41,15 +42,14 @@ private:
             work = newWork;
             mood = newMood;
         }
-        */
+        
     void setFile (string newFileName) {
         fileName = newFileName;
     }
     string getFile () {
         return fileName;
     }
-    void readFile () {
-            ifstream fin;
+    void readFile (ifstream &fin) {
             fin.open(fileName);
             getline(fin, mood);
             //configure to ignore first 2 numbers
@@ -57,7 +57,7 @@ private:
             fin >> sleep >> phone >> school >> social
             >> work;
             //need to make sure it only reads in what I need
-            //fin.close(); //might be better as its own function
+            fin.close(); //might be better as its own function
     }
     string getDate () {
         return month + " " + day;
@@ -96,103 +96,28 @@ private:
         return 168/work;
     }
 
-
-/*
-getFromUser() to gather user input from file or iostream
-    double m_sleepDist; //distribution of time throughout week spent on sleep
-    double m_phoneDist; //not needed as member variable
-    double m_schoolDist;
-    double m_socialDist;
-*/
-
 };
 
 enum DAYOFWEEK {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY};
 
-class Week {
-private:
+class Week: public eachDay {
+protected:
     vector <eachDay> days;
     //days[MONDAY].getFromUser()
 
 public:
-//functions
     void compileDays (vector <eachDay> days) {
         //put all days into week vector
     }
-    void readWeek () {
+    void readWeek (ifstream &fin) {
         for (int i = 0; i < 7; i++) {
             eachDay data;
-            data.readFile();
+            data.readFile(fin);
             days.push_back(data);      
         }
         
-
-    }
-    void getSun () {
-        cout << days[0].getDate() << endl;
-        cout << days[0].getMood() << endl;
-        cout << days[0].getSleep() << endl;
-        cout << days[0].getSocial() << endl;
-        cout << days[0].getPhone() << endl;
-        cout << days[0].getWork() << endl;
-        cout << days[0].getSchool() << endl;
-    }
-    void getMon () {
-        cout << days[1].getDate() << endl;
-        cout << days[1].getMood() << endl;
-        cout << days[1].getSleep() << endl;
-        cout << days[1].getSocial() << endl;
-        cout << days[1].getPhone() << endl;
-        cout << days[1].getWork() << endl;
-        cout << days[1].getSchool() << endl;
-    }
-    void getTues () {
-        cout << days[2].getDate() << endl;
-        cout << days[2].getMood() << endl;
-        cout << days[2].getSleep() << endl;
-        cout << days[2].getSocial() << endl;
-        cout << days[2].getPhone() << endl;
-        cout << days[2].getWork() << endl;
-        cout << days[2].getSchool() << endl;
-    }
-    void getWed () {
-        cout << days[3].getDate() << endl;
-        cout << days[3].getMood() << endl;
-        cout << days[3].getSleep() << endl;
-        cout << days[3].getSocial() << endl;
-        cout << days[3].getPhone() << endl;
-        cout << days[3].getWork() << endl;
-        cout << days[3].getSchool() << endl;
-    }
-    void getThurs () {
-        cout << days[4].getDate() << endl;
-        cout << days[4].getMood() << endl;
-        cout << days[4].getSleep() << endl;
-        cout << days[4].getSocial() << endl;
-        cout << days[4].getPhone() << endl;
-        cout << days[4].getWork() << endl;
-        cout << days[4].getSchool() << endl;
-    }
-    void getFri () {
-        cout << days[5].getDate() << endl;
-        cout << days[5].getMood() << endl;
-        cout << days[5].getSleep() << endl;
-        cout << days[5].getSocial() << endl;
-        cout << days[5].getPhone() << endl;
-        cout << days[5].getWork() << endl;
-        cout << days[5].getSchool() << endl;
-    }
-    void getSat () {
-        cout << days[6].getDate() << endl;
-        cout << days[6].getMood() << endl;
-        cout << days[6].getSleep() << endl;
-        cout << days[6].getSocial() << endl;
-        cout << days[6].getPhone() << endl;
-        cout << days[6].getWork() << endl;
-        cout << days[6].getSchool() << endl;
     }
 
-    
     double sleepDistWeek(eachDay &data) {
         double total = 0;
         for (int i = 0; i < 7; i++) {
@@ -228,22 +153,20 @@ public:
         }
         return 168/total;
     }
-
-
-
 };
 
-class Calendar {
+class Calendar: public Week {
 public:
 
-    void calendarFormatter () {
-        //TBD
+    void calendarFormatter (ofstream &fout) {
+        fout << "MONDAY" << endl;
+        fout << "--------" << endl;
+        fout << days[MONDAY].getMood() << endl;
     }
-    void outFile (eachDay eachday, Week week) {
+    void outFile (eachDay &eachday, Week &week) {
         ofstream fout;
         fout.open("Calendar.txt");
-        fout << "MONDAY: " << endl;
-        week.getMonday();
+        calendarFormatter(fout);
         //test
         
     }
@@ -261,6 +184,23 @@ public:
 
 
 int main () {
+    cout << "Hello, welcome to the calendar that shows you" <<
+    " how you spend your time in a week!" << endl;
+    cout << endl;
+    cout << "Please enter your file name: ";
+    eachDay data;
+    Week week;
+    Calendar calendar;
+    ifstream fin;
+    ofstream fout;
+    string name;
+    getline(cin, name);
+    data.setFile(name);
+    week.readWeek(fin);
+    calendar.outFile(data, week);
+
+
+
 
     return 0;
 }

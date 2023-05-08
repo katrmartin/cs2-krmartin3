@@ -5,8 +5,6 @@
 #include <fstream>
 #include <cmath>
 #include <iomanip>
-#include <vector>
-#include <algorithm>
 
 using namespace std;
 /*  Features
@@ -60,12 +58,6 @@ class Label {
 	}
 	void read(istream &in) {
 		in >> column >> row;
-	}
-	int getRow() {
-		return row;
-	}
-	char getCol() {
-		return column;
 	}
 };
 
@@ -122,105 +114,35 @@ class Formula:public Cell {
 	void invalidate() { updated=false; }
 	void calculate(PrimordialSheet *sheet) {
 	  stack<double> s;
-      vector <string> strings;
-      int position;
-      string item;
-      string temp = formula;
-	  // If I need "A20"
-	  // sheet->getValue(Label("A20"));
-		// Re implement our push-down calculator for this formula
-		// You first assignment is to implement this
-		// HINT use the expression evaluation code from class as a
-		// starting point
-        while ((position=temp.find(" "))!= string::npos) {
-            item=temp.substr(0,position);
-            temp.erase(0,position+1);
-            strings.push_back(item);
-
-        }
-        strings.push_back(temp);
-
-        for (string item: strings)
-        {
-            bool isNum = true;
-            for (int i = 0; i < item.length(); i++)
-            {
-                if (!isdigit(item[i]))
-                {
-                    isNum = false;
-                }
-            }
-
-        if (isNum) { // its a number
-				s.push(stoi(item));
-			} else {
-				if (item=="+") {
-					int a=s.top();
-                    s.pop();
-					int b=s.top();
-                    s.pop();
-					s.push(a+b);
+	  stringstream sin(formula);
+	  string input;
+	  sin >> input;
+		while (!sin.fail()) {
+			//cout << "Input is " << input <<endl;
+			if ((input[0]>='0' && input[0]<='9') || input[0]=='.')// its a number
+				s.push(stod(input));
+			else if (input[0]>='A' && input[0]<='Z')
+				s.push(sheet->getValue(input));
+			else {
+				if (input=="+"|| input=="-" || input=="*"|| input=="/") {
+					double a=s.top(); s.pop();
+					double b=s.top(); s.pop();
+					if (input=="+") s.push(a+b);
+					else if (input=="*") s.push(a*b);
+					else if (input=="-") s.push(b-a);
+					else if (input=="/") s.push(b/a);
+			    } else if (input=="cos" || input=="abs") {
+					double a=s.top(); s.pop();
+                    if (input=="cos") s.push(cos(a));
+                    else if (input=="abs") s.push(fabs(a));					
 				}
-				else if (item=="*") {
-					int a=s.top();
-                    s.pop();
-					int b=s.top();
-                    s.pop();
-					s.push(a*b);
-				}
-				else if (item=="-") {
-					int a=s.top();
-                    s.pop();
-					int b=s.top();
-                    s.pop();
-					s.push(a-b);
-				}
-				else if (item=="/") {
-					int a=s.top();
-                    s.pop();
-					int b=s.top();
-                    s.pop();
-					s.push(a/b);
-				}
-				else if (item=="abs"){
-					int a=s.top();
-					s.pop();
-					int b= s.top();
-					s.pop();
-					s.push(fabs(a));
-				}
-				else if (item=="cos"){
-					int a=s.top();
-					s.pop();
-					int b= s.top();
-					s.pop();
-					s.push(cos(a));
-				}	
-				else if (item=="sin"){
-					int a=s.top();
-					s.pop();
-					int b= s.top();
-					s.pop();
-					s.push(sin(a));
-				}	
-				else if (item=="tan"){
-					int a=s.top();
-					s.pop();
-					int b= s.top();
-					s.pop();
-					s.push(tan(a));
-				}								
-                else
-                {
-                    s.push(sheet->getValue(Label(item)));
-                }
-			}
-        }
-
+			} 
+			sin >> input;
+		}
+		cout << s.top() << endl;
 	  label.print();
-	  cout << " was calculated" << endl;
 	  value=s.top();
-      cout << value << endl;
+	  cout << " was calculated " << value << endl;
 	  updated=true;
 	}
 	void print(ostream &out=cout) {
@@ -249,11 +171,6 @@ class String:public Cell {
 	void print(ostream &out=cout) {
 		Cell::print(out);
 		out << ":'" << value<<"'" << endl;
-	}
-
-	string getText()
-	{
-		return value;
 	}
 };
 
@@ -336,141 +253,7 @@ class Sheet:public PrimordialSheet {
 		}
 	}
 	void print2D(ostream &out=cout) {
-
-		//figure out the biggest element in the spreadsheet
-			//for each element in spreadsheet #FIXED
-				//get value or text #FIXED
-				//determine the length of that value or text when printed #FIXED
-				//store result in vector #FIXED
-			//search for max value, store
-
-
-	vector<int> stringSizes;
-	map<Label, Cell*>::iterator it;
-	for (it = cells.begin(); it != cells.end(); it++) {
-		if(it->second->getType() != 'S')
-		{
-			string temp = to_string(it->second->getValue(this));
-			temp.erase(temp.find_last_not_of('0')+1, string::npos);
-			temp.erase(temp.find_last_not_of('.')+1, string::npos);
-			stringSizes.push_back(temp.size());
-		}
-		else
-		{
-			stringSizes.push_back(it->second->getText().size());
-		}
-	}
-
-	int biggestSize;
-	sort(stringSizes.begin(), stringSizes.end(), greater<int>());
-	if(stringSizes.size() > 0) {
-	biggestSize = stringSizes[0];
-	}
-
-			
-		//figure out minimum row #
-			//for each element in spreadsheet
-				//grab its cell (by the throat) #FIXED
-				//see the row number of the cell #FIXED
-				//if row number is less than min, set as new min #FIXED
-		int minRow = 239482399;
-		for (it = cells.begin(); it != cells.end(); it++) {
-			int temp = it->second->getLabel().getRow();
-			if (temp < minRow) {
-				minRow = temp;
-			}	
-		}
-		
-
-		//figure out maximum row #
-		//for each element in spreadsheet
-				//grab its cell (by the throat) #fixed
-				//see the row number of the cell #fixed
-				//if row number is more than max, set as new max #fixed
-		int maxRow = 0;
-		for (it = cells.begin(); it != cells.end(); it++) {
-			int temp = it->second->getLabel().getRow();
-			if (temp > maxRow) {
-				maxRow = temp;
-			}	
-		}
-
-		char minCol = 'Z';
-		for (it = cells.begin(); it != cells.end(); it++) {
-			char temp = it->second->getLabel().getCol();
-			if (temp < minCol) {
-				minCol = temp;
-			}	
-		}
-
-		char maxCol = 'A';
-		for (it = cells.begin(); it != cells.end(); it++) {
-			char temp = it->second->getLabel().getCol();
-			if (temp > maxCol) {
-				maxCol = temp;
-			}	
-		}
-
-		char c = minCol;
-		//output header (A-Z) (setw will be column width determined from above)
-		//setw(biggestSize)
-		out << "ROW|  ";
-		for (char c = minCol; c <= maxCol; c++) {
-		out << setw(biggestSize-2) << c << "|  ";
-		}
-		out << endl;
-		out << "---+";
-		out << setfill('-');
-		for (char c = minCol; c <= maxCol; c++) {
-		out << setw(biggestSize) << "" << "+";
-		}
-		out << endl;
-		out << setfill(' ');
-		//for each row
-			//output row # |
-		int newMinRow = minRow;
-		for(newMinRow; newMinRow <= maxRow; newMinRow++) {
-			out << newMinRow << '|';
-			for (char c = minCol; c <= maxCol; c++)
-			{
-				string lab = string(1,c);
-				lab += newMinRow;
-				Label temp = Label(lab);
-				if(cells.count(temp) > 0) // if thing exists
-				{
-					for (it = cells.begin(); it != cells.end(); it++) {
-						if (it->second->getType() != 'S') {
-							out << it->second->getValue(this);
-						}
-						else {
-							out << it->second->getText();
-						}
-						
-					}
-					//print thing if string or value
-				}
-				else // if no thing exists
-				{
-					//print blank at column wide
-					out << setw(biggestSize) << "";
-				}
-				out << endl;
-					//print the ------
-				out << "---+";
-				out << setfill('-');
-				for (char c = minCol; c <= maxCol; c++) {
-				out << setw(biggestSize) << "" << "+";
-		}
-
-			}
-		}
-			//for A-Z
-				//output value if not null and |
-
-				//if null, output blank spot (setw!) and |
-			//endl
-
-
+		//toDO
 	}
 };
 
@@ -528,8 +311,6 @@ int main() {
 		  s.remove(input); 
 	  } else if (choice==3){ 
 		  s.print();
-	  } else if (choice==4) {
-		  s.print2D(cout);
 	  } else if (choice==5) {
 		  s.calculate(&s);
 	  } else if (choice==6) {
@@ -540,7 +321,3 @@ int main() {
     }
 	return 0;
 }
-
-
-
-	

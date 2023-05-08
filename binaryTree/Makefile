@@ -4,7 +4,7 @@ COMPILER_FLAGS = -c -g -Wall -std=c++17
 
 PROGRAM_NAME = BinaryTree.exe
 
-CPP_FILES = BinaryTree.cpp
+CPP_FILES = BinaryTreeREAL.cpp
 
 build:
 	@$(COMPILER) $(COMPILER_FLAGS) $(CPP_FILES)
