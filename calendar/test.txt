@@ -1,2 +1,16 @@
-12 4 nostalgic 5 6 3 4 6
-12 5 happy 5 6 3 3 7
+Week 1
+SUNDAY nostalgic 1 1 1 1 1
+MONDAY deranged 1 1 1 1 1
+TUESDAY sad 1 1 1 1 1
+WEDNESDAY drained 1 1 1 1 1
+THURSDAY hopeful 1 1 1 1 1
+FRIDAY refreshed 1 1 1 1 1
+SATURDAY silly 1 1 1 1 1
+Week 2
+SUNDAY nostalgic 5 6 3 4 6
+MONDAY deranged 5 6.5 3 3 7
+TUESDAY BASED 3 6 6 1 8
+WEDNESDAY drained 4 5 6 1 8
+THURSDAY hopeful 7 6 4 1 8.5
+FRIDAY refreshed 10.5 6 5 1 0
+SATURDAY silly 10 6 5 1 0

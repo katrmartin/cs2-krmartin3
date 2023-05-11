@@ -336,15 +336,12 @@ class Sheet:public PrimordialSheet {
 		}
 	}
 	void print2D(ostream &out=cout) {
-
 		//figure out the biggest element in the spreadsheet
 			//for each element in spreadsheet #FIXED
 				//get value or text #FIXED
 				//determine the length of that value or text when printed #FIXED
 				//store result in vector #FIXED
 			//search for max value, store
-
-
 	vector<int> stringSizes;
 	map<Label, Cell*>::iterator it;
 	for (it = cells.begin(); it != cells.end(); it++) {
@@ -360,14 +357,11 @@ class Sheet:public PrimordialSheet {
 			stringSizes.push_back(it->second->getText().size());
 		}
 	}
-
 	int biggestSize;
 	sort(stringSizes.begin(), stringSizes.end(), greater<int>());
 	if(stringSizes.size() > 0) {
 	biggestSize = stringSizes[0];
-	}
-
-			
+	}	
 		//figure out minimum row #
 			//for each element in spreadsheet
 				//grab its cell (by the throat) #FIXED
@@ -380,8 +374,6 @@ class Sheet:public PrimordialSheet {
 				minRow = temp;
 			}	
 		}
-		
-
 		//figure out maximum row #
 		//for each element in spreadsheet
 				//grab its cell (by the throat) #fixed
@@ -394,7 +386,6 @@ class Sheet:public PrimordialSheet {
 				maxRow = temp;
 			}	
 		}
-
 		char minCol = 'Z';
 		for (it = cells.begin(); it != cells.end(); it++) {
 			char temp = it->second->getLabel().getCol();
@@ -402,7 +393,6 @@ class Sheet:public PrimordialSheet {
 				minCol = temp;
 			}	
 		}
-
 		char maxCol = 'A';
 		for (it = cells.begin(); it != cells.end(); it++) {
 			char temp = it->second->getLabel().getCol();
@@ -410,13 +400,13 @@ class Sheet:public PrimordialSheet {
 				maxCol = temp;
 			}	
 		}
-
 		char c = minCol;
 		//output header (A-Z) (setw will be column width determined from above)
 		//setw(biggestSize)
-		out << "ROW|  ";
+		out << endl;
+		out << "Row|  ";
 		for (char c = minCol; c <= maxCol; c++) {
-		out << setw(biggestSize-2) << c << "|  ";
+		out << setfill(' ') << setw(biggestSize-2) << c << "|  ";
 		}
 		out << endl;
 		out << "---+";
@@ -425,52 +415,40 @@ class Sheet:public PrimordialSheet {
 		out << setw(biggestSize) << "" << "+";
 		}
 		out << endl;
-		out << setfill(' ');
 		//for each row
 			//output row # |
 		int newMinRow = minRow;
 		for(newMinRow; newMinRow <= maxRow; newMinRow++) {
-			out << newMinRow << '|';
-			for (char c = minCol; c <= maxCol; c++)
-			{
+			out << setfill(' ') << newMinRow << " |";
+			for (char c = minCol; c <= maxCol; c++) {
 				string lab = string(1,c);
-				lab += newMinRow;
-				Label temp = Label(lab);
-				if(cells.count(temp) > 0) // if thing exists
-				{
-					for (it = cells.begin(); it != cells.end(); it++) {
-						if (it->second->getType() != 'S') {
-							out << it->second->getValue(this);
+				lab += to_string(newMinRow); //concatenate string
+				Label temp = Label(lab); //make into label!
+				if(cells.count(temp) > 0) { // if thing exists					
+				//for A-Z
+				//output value if not null and |
+						if (cells[temp]->getType() != 'S') {
+							out << setfill(' ') << setw(biggestSize) << cells[temp]->getValue(this) << "|";
 						}
 						else {
-							out << it->second->getText();
-						}
-						
-					}
+							out << setfill(' ') << setw(biggestSize) << cells[temp]->getText() << "|";
+						}	
 					//print thing if string or value
 				}
-				else // if no thing exists
-				{
+				else { // if no thing exists
 					//print blank at column wide
-					out << setw(biggestSize) << "";
+					out << setfill(' ')  << setw(biggestSize) << "" << '|';
 				}
+		}
 				out << endl;
-					//print the ------
 				out << "---+";
 				out << setfill('-');
 				for (char c = minCol; c <= maxCol; c++) {
 				out << setw(biggestSize) << "" << "+";
-		}
-
 			}
+			out << endl;
 		}
-			//for A-Z
-				//output value if not null and |
-
-				//if null, output blank spot (setw!) and |
-			//endl
-
-
+		out << endl;
 	}
 };
 
